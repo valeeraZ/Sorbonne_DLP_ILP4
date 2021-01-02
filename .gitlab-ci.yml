@@ -44,3 +44,12 @@ ILP4:
   artifacts:
     reports:
       junit: report.xml
+
+TME8:
+  stage: tme
+  script: >
+    /home/dlp/run.sh -id TME8 -name TME8
+    com.paracamplus.ilp4.ilp4tme8.interpreter.test.InterpreterTest
+  artifacts:
+    reports:
+      junit: report.xml
