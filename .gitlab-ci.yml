@@ -50,7 +50,7 @@ TME8:
   script: >
     /home/dlp/run.sh -id TME8 -name TME8
     com.paracamplus.ilp4.ilp4tme8.interpreter.test.InterpreterTest
-    com.paracamplus.ilp4.ilp4tme8.compiler.test.InterpreterTest
+    com.paracamplus.ilp4.ilp4tme8.compiler.test.CompilerTest
   artifacts:
     reports:
       junit: report.xml
