@@ -1,0 +1,9 @@
+class Titi {
+    var toto;
+    var tata;
+}
+
+let titi = new Titi("foo", "bar") in (
+    titi["tutu"] = "baz";
+    titi has "tutu";
+)

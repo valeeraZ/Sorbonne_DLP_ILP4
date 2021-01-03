@@ -33,7 +33,7 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class InterpreterTest extends com.paracamplus.ilp4.interpreter.test.InterpreterTest {
     
-	protected static String[] samplesDirName = { "SamplesTME8" };
+	protected static String[] samplesDirName = { "SamplesTME8", "SamplesTME8bis" };
     
     public InterpreterTest(final File file) {
     	super(file);
