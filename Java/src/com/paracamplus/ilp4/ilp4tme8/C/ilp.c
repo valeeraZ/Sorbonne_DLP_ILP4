@@ -17,6 +17,7 @@ extern struct ILP_Class ILP_object_Object_class;
 
 struct ILP_Class ILP_object_Class_class = {
      &ILP_object_Class_class,
+     NULL,
      { { &ILP_object_Object_class,
          "Class",
          1,
@@ -28,6 +29,7 @@ struct ILP_Class ILP_object_Class_class = {
 
 struct ILP_Class ILP_object_Object_class = {
      &ILP_object_Class_class,
+     NULL,
      { { NULL,
          "Object",
          0,
@@ -39,6 +41,7 @@ struct ILP_Class ILP_object_Object_class = {
 
 struct ILP_Class ILP_object_Method_class = {
      &ILP_object_Class_class,
+     NULL,
      { { &ILP_object_Object_class,
          "Method",
          0,
@@ -50,6 +53,7 @@ struct ILP_Class ILP_object_Method_class = {
 
 struct ILP_Class ILP_object_Field_class = {
      &ILP_object_Class_class,
+     NULL,
      { { &ILP_object_Object_class,
          "Field",
          1,
@@ -61,6 +65,7 @@ struct ILP_Class ILP_object_Field_class = {
 
 struct ILP_Class ILP_object_Closure_class = {
      &ILP_object_Class_class,
+     NULL,
      { { &ILP_object_Object_class,
          "Closure",
          3,
@@ -72,6 +77,7 @@ struct ILP_Class ILP_object_Closure_class = {
 
 struct ILP_Class ILP_object_Box_class = {
      &ILP_object_Class_class,
+     NULL,
      { { &ILP_object_Object_class,
          "Box",
          1,
@@ -83,6 +89,7 @@ struct ILP_Class ILP_object_Box_class = {
 
 struct ILP_Class ILP_object_Integer_class = {
      &ILP_object_Class_class,
+     NULL,
      { { &ILP_object_Object_class,
          "Integer",
          0,
@@ -94,6 +101,7 @@ struct ILP_Class ILP_object_Integer_class = {
 
 struct ILP_Class ILP_object_Float_class = {
      &ILP_object_Class_class,
+     NULL,
      { { &ILP_object_Object_class,
          "Float",
          0,
@@ -105,6 +113,7 @@ struct ILP_Class ILP_object_Float_class = {
 
 struct ILP_Class ILP_object_Boolean_class = {
      &ILP_object_Class_class,
+     NULL,
      { { &ILP_object_Object_class,
          "Boolean",
          0,
@@ -116,6 +125,7 @@ struct ILP_Class ILP_object_Boolean_class = {
 
 struct ILP_Class ILP_object_String_class = {
      &ILP_object_Class_class,
+     NULL,
      { { &ILP_object_Object_class,
          "String",
          0,
@@ -127,6 +137,7 @@ struct ILP_Class ILP_object_String_class = {
 
 struct ILP_Class ILP_object_Exception_class = {
      &ILP_object_Class_class,
+     NULL,
      { { &ILP_object_Object_class,
          "Exception",
          0,
@@ -143,6 +154,7 @@ struct ILP_Class ILP_object_Exception_class = {
 
 struct ILP_Field ILP_object_super_field = {
      &ILP_object_Field_class,
+     NULL,
      { { &ILP_object_Class_class,
          NULL,
          "super",
@@ -151,6 +163,7 @@ struct ILP_Field ILP_object_super_field = {
 
 struct ILP_Field ILP_object_defining_class_field = {
      &ILP_object_Field_class,
+     NULL,
      { { &ILP_object_Field_class,
          NULL,
          "defining_class",
@@ -159,6 +172,7 @@ struct ILP_Field ILP_object_defining_class_field = {
 
 struct ILP_Field ILP_object_previous_field_field = {
      &ILP_object_Field_class,
+     NULL,
      { { &ILP_object_Field_class,
          &ILP_object_defining_class_field,
          "previous_field",
@@ -167,6 +181,7 @@ struct ILP_Field ILP_object_previous_field_field = {
 
 struct ILP_Field ILP_object_class_defining_field = {
      &ILP_object_Field_class,
+     NULL,
      { { &ILP_object_Method_class,
          NULL,
          "class_defining",
@@ -175,6 +190,7 @@ struct ILP_Field ILP_object_class_defining_field = {
 
 struct ILP_Field ILP_object_value_field = {
      &ILP_object_Field_class,
+     NULL,
      { { &ILP_object_Box_class,
          NULL,
          "value",
@@ -189,6 +205,7 @@ struct ILP_Field ILP_object_value_field = {
 
 struct ILP_Method ILP_object_print_method = {
      &ILP_object_Method_class,
+     NULL,
      { { &ILP_object_Object_class,
          "print",
          1,       /* arity */
@@ -198,6 +215,7 @@ struct ILP_Method ILP_object_print_method = {
 
 struct ILP_Method ILP_object_classOf_method = {
      &ILP_object_Method_class,
+     NULL,
      { { &ILP_object_Object_class,
          "classOf",
          1,       /* arity */
@@ -211,11 +229,13 @@ struct ILP_Method ILP_object_classOf_method = {
 
 struct ILP_Object ILP_object_true = {
      &ILP_object_Boolean_class,
+     NULL,
      { ILP_BOOLEAN_TRUE_VALUE }
 };
 
 struct ILP_Object ILP_object_false = {
      &ILP_object_Boolean_class,
+     NULL,
      { ILP_BOOLEAN_FALSE_VALUE }
 };
 
@@ -226,6 +246,7 @@ struct ILP_Object ILP_object_false = {
 
 static struct ILP_Exception ILP_the_exception =  {
      &ILP_object_Exception_class,
+     NULL,
      { { "", 
          { NULL } } }
 };
@@ -954,7 +975,30 @@ ILP_lookup_property(ILP_Object target, char* property)
           field = field->_content.asField.previous_field;
      }
 
+     //champs statiques
+     //return NULL;
+
+     //champs dynamiques
+     ILP_Property dynamicProperty = target->properties;
+     while(dynamicProperty){
+          if(!strcmp(dynamicProperty->name, property))
+               return &(dynamicProperty->value);
+     }
      return NULL;
+}
+
+ILP_Object*
+ILP_create_property(ILP_Object target, char* property)
+{
+     ILP_Property newProperty = ILP_MALLOC(sizeof(newProperty));
+     newProperty->name = property;
+     newProperty->next = target->properties;
+     newProperty->value = ILP_FALSE;
+
+     //move pointer to newProperty
+     target->properties = newProperty;
+
+     return &(newProperty->value);
 }
 
 ILP_Object
@@ -974,7 +1018,11 @@ ILP_write_property(ILP_Object property, ILP_Object target, ILP_Object value)
      ILP_CheckIfString(property);
      ILP_Object* field = ILP_lookup_property(target, property->_content.asString.asCharacter);
      if(!field){
-          ILP_domain_error("Property doesn't exist", target);
+          //champs statiques
+          //ILP_domain_error("Property doesn't exist", target);
+
+          //champs dynamiques
+          field = ILP_create_property(target, property->_content.asString.asCharacter);
      }
      ILP_Object result = *field;
      *field = value;

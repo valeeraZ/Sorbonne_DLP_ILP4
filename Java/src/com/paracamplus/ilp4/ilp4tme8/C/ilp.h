@@ -35,10 +35,18 @@ enum ILP_BOOLEAN_VALUE {
 #define ILP_EXCEPTION_BUFFER_LENGTH    1000
 #define ILP_EXCEPTION_CULPRIT_LENGTH     10
 
+/** tme 8 bis */
+typedef struct ILP_Property {
+    char*                   name;
+    struct ILP_Object*      value;
+    struct ILP_Property*    next;
+} *ILP_Property;
+
 /** The structure of ILP objects: a header and additional fields. */
 
 typedef struct ILP_Object {
      struct ILP_Class*  _class;
+     ILP_Property*       properties;
      union {
           unsigned char asBoolean;
           int           asInteger;
@@ -90,6 +98,7 @@ typedef struct ILP_Object {
 
 typedef struct ILP_Exception {
      struct ILP_Class* _class;
+     ILP_Property       properties;
      union {
           struct asException_ {
                char                message[ILP_EXCEPTION_BUFFER_LENGTH];
@@ -100,6 +109,7 @@ typedef struct ILP_Exception {
 
 typedef struct ILP_Class {
      struct ILP_Class* _class;
+     ILP_Property       properties;
      union {
           struct asClass_ {
                struct ILP_Class*   super;
@@ -114,6 +124,7 @@ typedef struct ILP_Class {
 
 typedef struct ILP_Method {
      struct ILP_Class* _class;
+     ILP_Property       properties;
      union {
           struct asMethod_ {
                struct ILP_Class*   class_defining;
@@ -126,6 +137,7 @@ typedef struct ILP_Method {
 
 typedef struct ILP_Field {
      struct ILP_Class* _class;
+     ILP_Property       properties;
      union {
           struct asField_ {
                struct ILP_Class*   defining_class;
@@ -138,6 +150,7 @@ typedef struct ILP_Field {
 
 typedef struct ILP_Closure {
      struct ILP_Class* _class;
+     ILP_Property       properties;
      union {
           struct asClosure_ {
                ILP_general_function function;
@@ -149,6 +162,7 @@ typedef struct ILP_Closure {
 
 typedef struct ILP_Box {
      struct ILP_Class* _class;
+     ILP_Property       properties;
      union {
           struct asBox_ {
                struct ILP_Object*   value;
@@ -161,6 +175,7 @@ typedef struct ILP_Box {
 #define ILP_GenerateClass(i) \
 typedef struct ILP_Class##i {                                   \
      struct ILP_Class* _class;                                  \
+     ILP_Property*     properties;                              \
      union {                                                    \
           struct asClass_##i {                                  \
                struct ILP_Class*   super;                       \

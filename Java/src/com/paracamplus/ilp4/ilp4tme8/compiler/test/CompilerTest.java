@@ -34,7 +34,7 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class CompilerTest extends com.paracamplus.ilp4.compiler.test.CompilerTest {
     
-    protected static String[] samplesDirName = { "SamplesTME8" };
+    protected static String[] samplesDirName = { "SamplesTME8", "SamplesTME8bis" };
     protected static String scriptCommand = "Java/src/com/paracamplus/ilp4/ilp4tme8/C/compileThenRun.sh +gc";
     
     public CompilerTest(final File file) {
