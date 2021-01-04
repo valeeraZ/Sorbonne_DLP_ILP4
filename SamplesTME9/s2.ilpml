@@ -1,0 +1,32 @@
+class titi extends Object
+{
+    var x;
+
+    method work ()
+    (self.x = self.x + 1; );
+
+    method getX()
+    (self.x);
+}
+
+class tata extends titi
+{
+    var y;
+
+    method work ()
+    (self.x = self.x + self.y; super);
+}
+
+let ta = new tata(0, 2) and ti = new titi(0) and i = 0 in (
+    while i < 100000 do (
+        try (
+            ta.work();
+            ta.work();
+            ti.work();
+            i = i + 1;
+        ) catch (e) (
+            false
+        )
+    );
+    ta.getX();
+)
