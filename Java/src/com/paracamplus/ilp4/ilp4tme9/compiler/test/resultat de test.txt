@@ -7,7 +7,7 @@ s2.ilpml:
 
 -------
 
-Compiler (avec Cache)
+Compiler (avec Global Method Cache)
 
 s1.ilpml:
     Temps d'exécution: 654.686035 milliseconde
@@ -19,3 +19,19 @@ s2.ilpml:
     Cache Calls of method: 300001
     Cache Miss of method: 200001
     Cache Hit ratio: 33.333222
+
+-------
+
+Compiler (avec Site Appel Cache)
+
+s1.ilpml:
+    Temps d'exécution: 446.928986 milliseconde
+    Cache Calls of method: 100001
+    Cache Miss of method: 2
+    Cache Hit ratio: 99.998000
+
+s2.ilpml
+    Temps d'exécution: 765.948059 milliseconde
+    Cache Calls of method: 300001
+    Cache Miss of method: 4
+    Cache Hit ratio: 99.998667

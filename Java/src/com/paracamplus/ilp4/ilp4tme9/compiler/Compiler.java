@@ -74,8 +74,22 @@ public class Compiler extends com.paracamplus.ilp4.compiler.Compiler {
             expression.accept(this, c2);
         }
 
+        // global cache
+        /*
         emit(tmpMethod.getMangledName());
         emit(" = ILP_find_method_global_cache("); // find_method-->find_method_cached
+        emit(tmpReceiver.getMangledName());
+        emit(", &ILP_object_");
+        emit(Inamed.computeMangledName(iast.getMethodName()));
+        emit("_method, ");
+        emit(1 + arguments.length);
+        emit(");\n");
+        */
+
+        //site cache
+        emit("ILP_find_method_site_cache(");
+        emit(tmpMethod.getMangledName());
+        emit(", ");
         emit(tmpReceiver.getMangledName());
         emit(", &ILP_object_");
         emit(Inamed.computeMangledName(iast.getMethodName()));
