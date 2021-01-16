@@ -1,0 +1,5 @@
+d = 10
+let b = 4 and c = 5 in (
+	print(defined(e))
+)
+e = 11
